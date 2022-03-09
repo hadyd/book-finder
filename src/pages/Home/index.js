@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { BookList, Header, Search } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBookList, reset, addToWishlist } from '../../actions/bookActions';
 import Container from 'react-bootstrap/Container';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { BiBookAlt } from 'react-icons/bi';
 import { MdFavorite } from 'react-icons/md';
+import { BookList, Header, Search, Wishlist } from '../../components';
+import {
+  getBookList,
+  reset,
+  addToWishlist,
+  deleteFromWishlist,
+} from '../../actions/bookActions';
 import styles from './Home.module.css';
-import Wishlist from '../../components/Wishlist';
 
 const Home = () => {
   const [searchKey, setSearchKey] = useState('Kahlil Gibran');
@@ -40,11 +44,6 @@ const Home = () => {
     }
   }, [dispatch, searchKey, startIndex]);
 
-  console.log(bookListResultAllData, 'all data');
-  console.log(bookListResultWishlist, 'wishlist data');
-  console.log(bookListLoading, 'loading');
-  console.log(bookListError, 'error');
-
   return (
     <>
       <Container>
@@ -64,13 +63,18 @@ const Home = () => {
                 handleLoadMore={handleLoadMore}
                 addToWishlist={addToWishlist}
                 keyTab={keyTab}
+                deleteFromWishlist={deleteFromWishlist}
               />
             </Tab>
             <Tab
               eventKey="wishlist"
               title={<MdFavorite className={styles.icon} />}
             >
-              <Wishlist data={bookListResultWishlist} keyTab={keyTab} />
+              <Wishlist
+                data={bookListResultWishlist}
+                keyTab={keyTab}
+                deleteFromWishlist={deleteFromWishlist}
+              />
             </Tab>
           </Tabs>
         </div>

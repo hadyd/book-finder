@@ -17,6 +17,7 @@ const BookList = ({
   handleLoadMore,
   addToWishlist,
   keyTab,
+  deleteFromWishlist,
 }) => {
   const dispatch = useDispatch();
   return (
@@ -67,7 +68,10 @@ const BookList = ({
                       Add To Wishlist <MdFavorite />
                     </Button>
                   ) : (
-                    <Button variant="danger">
+                    <Button
+                      onClick={() => dispatch(deleteFromWishlist(index, book))}
+                      variant="danger"
+                    >
                       Remove Wishlist <FaTrashAlt />
                     </Button>
                   )}
@@ -89,7 +93,12 @@ const BookList = ({
             <Button onClick={handleLoadMore} variant="secondary">
               Load More
               {loading && (
-                <Spinner animation="border" size="sm" variant="light" />
+                <Spinner
+                  animation="border"
+                  size="sm"
+                  variant="light"
+                  className={styles.spinner}
+                />
               )}
             </Button>
           ) : null}

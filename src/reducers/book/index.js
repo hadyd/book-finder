@@ -2,6 +2,7 @@ import {
   GET_BOOK_LIST,
   RESET,
   ADD_TO_WISHLIST,
+  DELETE_FROM_WISHLIST,
 } from '../../actions/bookActions';
 
 const initialState = {
@@ -48,6 +49,17 @@ const book = (state = initialState, action) => {
         ),
       };
 
+    case DELETE_FROM_WISHLIST:
+      let newBook = { ...action.payload.data, isWishlist: false };
+      return {
+        ...state,
+        bookListResultWishlist: state.bookListResultWishlist.filter(
+          (w) => w !== action.payload.data
+        ),
+        bookListResultAllData: state.bookListResultAllData.map((book) =>
+          book.id === action.payload.data.id ? newBook : book
+        ),
+      };
     default:
       return state;
   }

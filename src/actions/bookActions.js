@@ -4,6 +4,7 @@ import { BASE_URL } from '../utils';
 export const GET_BOOK_LIST = 'GET_BOOK_LIST';
 export const RESET = 'RESET';
 export const ADD_TO_WISHLIST = 'ADD_TO_WISHLIST';
+export const DELETE_FROM_WISHLIST = 'DELETE_FROM_WISHLIST';
 
 export const getBookList = (searchKey, startIndex) => {
   return (dispatch) => {
@@ -68,13 +69,24 @@ export const getBookList = (searchKey, startIndex) => {
 
 export const addToWishlist = (index, data) => {
   const newData = { ...data, isWishlist: true };
-  console.log(newData, 'newdata');
   return async (dispatch) => {
     dispatch({
       type: ADD_TO_WISHLIST,
       payload: {
         index,
         data: newData,
+      },
+    });
+  };
+};
+
+export const deleteFromWishlist = (index, data) => {
+  return async (dispatch) => {
+    dispatch({
+      type: DELETE_FROM_WISHLIST,
+      payload: {
+        index,
+        data: data,
       },
     });
   };
