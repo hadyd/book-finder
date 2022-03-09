@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Header, Search } from '../../components';
+import { BookList, Header, Search } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBookList, reset } from '../../actions/bookActions';
+import { getBookList, reset, addToWishlist } from '../../actions/bookActions';
+import Container from 'react-bootstrap/Container';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+import { BiBookAlt } from 'react-icons/bi';
+import { MdFavorite } from 'react-icons/md';
+import styles from './Home.module.css';
+import Wishlist from '../../components/Wishlist';
 
 const Home = () => {
-  const [searchKey, setSearchKey] = useState('Pramoedya Ananta Toer');
+  const [searchKey, setSearchKey] = useState('Kahlil Gibran');
   const [startIndex, setStartIndex] = useState(0);
+  const [keyTab, setKeyTab] = useState('books-list');
   const {
     bookListResultAllData,
     bookListResultWishlist,
@@ -22,6 +30,10 @@ const Home = () => {
     }
   };
 
+  const handleLoadMore = () => {
+    setStartIndex(bookListResultAllData.length);
+  };
+
   useEffect(() => {
     if (searchKey) {
       dispatch(getBookList(searchKey, startIndex));
@@ -35,8 +47,34 @@ const Home = () => {
 
   return (
     <>
-      <Header title="Book Finder" />
-      <Search onKeyPress={handleSearch} />
+      <Container>
+        <Header title="book finder" />
+        {keyTab === 'books-list' && <Search onKeyPress={handleSearch} />}
+        <div className={styles['list-wrapper']}>
+          <Tabs activeKey={keyTab} onSelect={(k) => setKeyTab(k)}>
+            <Tab
+              eventKey="books-list"
+              title={<BiBookAlt className={styles.icon} />}
+              className={styles.tab}
+            >
+              <BookList
+                data={bookListResultAllData}
+                loading={bookListLoading}
+                error={bookListError}
+                handleLoadMore={handleLoadMore}
+                addToWishlist={addToWishlist}
+                keyTab={keyTab}
+              />
+            </Tab>
+            <Tab
+              eventKey="wishlist"
+              title={<MdFavorite className={styles.icon} />}
+            >
+              <Wishlist data={bookListResultWishlist} keyTab={keyTab} />
+            </Tab>
+          </Tabs>
+        </div>
+      </Container>
     </>
   );
 };

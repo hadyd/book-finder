@@ -1,4 +1,8 @@
-import { GET_BOOK_LIST, RESET } from '../../actions/bookActions';
+import {
+  GET_BOOK_LIST,
+  RESET,
+  ADD_TO_WISHLIST,
+} from '../../actions/bookActions';
 
 const initialState = {
   bookListResultAllData: [],
@@ -29,6 +33,19 @@ const book = (state = initialState, action) => {
         ...state,
         bookListResultAllData: [],
         bookListResultWishlist: [],
+      };
+
+    case ADD_TO_WISHLIST:
+      return {
+        ...state,
+        bookListResultAllData: Object.values({
+          ...state.bookListResultAllData,
+          [action.payload.index]: action.payload.data,
+        }),
+
+        bookListResultWishlist: [action.payload.data].concat(
+          state.bookListResultWishlist
+        ),
       };
 
     default:

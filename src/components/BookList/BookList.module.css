@@ -1,0 +1,39 @@
+.book-list-wrapper {
+  justify-content: center;
+  display: flex;
+  margin-top: 10px;
+}
+
+.item-wrapper {
+  justify-content: center;
+}
+
+.card {
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(107, 106, 106, 0.2);
+  margin: 10px;
+  width: 318px !important;
+}
+
+.thumbnail {
+  object-fit: contain;
+}
+
+.loadmore-wrapper {
+  justify-content: center;
+  display: flex;
+  margin-bottom: 30px;
+  margin-top: 25px !important;
+}
+
+.wishlist-wrapper {
+  justify-content: flex-end;
+  display: flex;
+  align-items: flex-end;
+}
+
+.empty-wrapper {
+  margin-top: 100px !important;
+  color: gray;
+}
