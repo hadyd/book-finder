@@ -8,7 +8,7 @@
  - Google Books API
 
 ### Getting Started
- - git clone https://github.com/hadyd/BookFinderApp.git
+ - git clone https://github.com/hadyd/book-finder.git
  - npm install
  - npm start
 
